@@ -1,0 +1,5 @@
+echo hello
+echo world
+history -w rec.txt
+echo nikita
+history -a rec.txt

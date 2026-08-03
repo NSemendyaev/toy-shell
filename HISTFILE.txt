@@ -1,0 +1,16 @@
+echo hello
+echo bye
+exit
+./shell
+./shell
+./shell
+gcc -Wall --pedantic-errors -o shell main.c list.c hst.c stack.c -lreadline
+./shell
+./shell
+clear
+gcc -Wall --pedantic-errors -o shell main.c list.c hst.c stack.c -lreadline
+./shell
+export HISTFILE=HISTFILE.txt
+gcc -Wall --pedantic-errors -o shell main.c list.c hst.c stack.c -lreadline
+./shell
+./shell
