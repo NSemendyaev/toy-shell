@@ -6,8 +6,12 @@
 
 #define COMMAND_HISTORY_CAPACITY 512U
 
+#define NAME "SHELL_HISTORY"
+#define VALUE "/Users/nikitasemendjajevs/workspace/semendyaev/my-shell/history/history"
+
 /* A bounded, heap-owning record of commands used for history persistence. */
-typedef struct {
+typedef struct
+{
     char *entries[COMMAND_HISTORY_CAPACITY];
     size_t length;
 } CommandHistory;
