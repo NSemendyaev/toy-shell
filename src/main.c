@@ -46,8 +46,29 @@ int main(void)
         add_history(input);
         (void)command_history_push(history, input);
         ParsedCommand *command = parse_command(input);
+
+        //
+        for (size_t i = 0; i < command->argument_count; i++)
+        {
+            printf("%s\n", command->arguments[i]);
+        }
+        //
+
         if (command == NULL || command->argument_count == 0U)
         {
+            parsed_command_destroy(command);
+            free(input);
+            continue;
+        }
+
+        if (command->isExe == true)
+        {
+            char *pwd = getenv("PWD");
+            char *abs_path = strcat(pwd, command->arguments[0]);
+            if (fork() == 0)
+            {
+                execv(abs_path, command->arguments);
+            }
             parsed_command_destroy(command);
             free(input);
             continue;
@@ -252,6 +273,7 @@ static bool append_argument(ParsedCommand *command, const char *token)
 static ParsedCommand *parse_command(const char *input)
 {
     ParsedCommand *command = calloc(1, sizeof(*command));
+    command->isExe = false;
     char token[INPUT_TOKEN_CAPACITY];
     size_t token_length = 0U;
     char quote = '\0';
@@ -264,6 +286,12 @@ static ParsedCommand *parse_command(const char *input)
     /* Build one token at a time while tracking whether spaces are quoted. */
     for (const char *character = input; *character != '\0'; ++character)
     {
+        if (command->argument_count == 0 && *character == '.')
+        {
+            command->isExe = true;
+            continue;
+        }
+
         if (quote == '\0' && (*character == ' ' || *character == '\t'))
         {
             if (token_length > 0U)

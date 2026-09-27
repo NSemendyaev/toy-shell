@@ -35,6 +35,7 @@ typedef struct
 typedef struct
 {
     size_t argument_count;
+    bool isExe;
     char *arguments[MAX_ARGUMENTS];
     Redirection *redirection;
 } ParsedCommand;
