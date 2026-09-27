@@ -1,0 +1,9 @@
+# Build outputs
+src/shell
+src/pipeline_demo
+src/pipe
+*.o
+
+# Runtime command history
+HISTFILE.txt
+rec.txt
